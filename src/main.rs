@@ -76,7 +76,24 @@ async fn main() -> anyhow::Result<()> {
         return Err(anyhow::anyhow!("Please specify ethereum provider URL via ETH_PROVIDER_URL environment variable or a cli argument!"));
     }.trim().to_owned();
 
-    let ethereum = wallet.ethereum(provider_url).await?;
+    let _ethereum = wallet.ethereum(provider_url).await?;
+
+    // Enable wallet if needed.
+    if !wallet.is_signing_key_set().await? {
+        let change_pubkey = wallet
+            .start_change_pubkey()
+            .fee_token("ETH")?
+            .send()
+            .await?;
+        let change_pubkey_receipt = change_pubkey.wait_for_commit().await?;
+
+        if !change_pubkey_receipt.success.unwrap_or(false) {
+            log::error!(
+                "Change pubkey failure: {:?}",
+                change_pubkey_receipt.fail_reason
+            );
+        }
+    }
 
     // Below is the playground now
 

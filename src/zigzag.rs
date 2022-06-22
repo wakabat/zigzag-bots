@@ -55,10 +55,10 @@ pub enum Side {
 #[serde(tag = "op", content = "args", rename_all = "lowercase")]
 pub enum Operation {
     Login(LoginArgs),
-    Submitorder3(Submitorder3Args),
+    Submitorder3(Box<Submitorder3Args>),
     Indicateliq2(Indicateliq2Args),
-    Fillrequest(FillrequestArgs),
-    Userordermatch(UserordermatchArgs),
+    Fillrequest(Box<FillrequestArgs>),
+    Userordermatch(Box<UserordermatchArgs>),
     Orderreceiptreq(OrderreceiptreqArgs),
     Orderreceipt(Order),
     Fillreceiptreq(FillreceiptreqArgs),

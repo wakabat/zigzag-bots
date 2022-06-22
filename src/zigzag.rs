@@ -574,8 +574,8 @@ mod tests {
   "args": [
     [
       {
-        "baseAssetId": "65",
-        "quoteAssetId": "1",
+        "baseAssetId": 65,
+        "quoteAssetId": 1,
         "baseFee": 1,
         "quoteFee": 1,
         "minSize": 1,

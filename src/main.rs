@@ -1,3 +1,9 @@
+#[cfg(test)]
+#[macro_use]
+extern crate assert_float_eq;
+
+mod zigzag;
+
 use clap::{ArgEnum, Parser};
 use flexi_logger::Logger;
 use std::fs;
@@ -80,6 +86,7 @@ async fn main() -> anyhow::Result<()> {
 
     // Enable wallet if needed.
     if !wallet.is_signing_key_set().await? {
+        log::info!("Setting signing key!");
         let change_pubkey = wallet
             .start_change_pubkey()
             .fee_token("ETH")?

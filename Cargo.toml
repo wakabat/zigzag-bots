@@ -17,11 +17,11 @@ tokio = { version = "1", features = ["full"] }
 serde = "1.0.137"
 serde_derive = "1.0.137"
 serde_tuple = "0.5.0"
-zksync = { path = "../zksync/sdk/zksync-rs" }
-zksync_eth_signer = { path = "../zksync/core/lib/eth_signer" }
 
-# zksync = { git = "https://github.com/matter-labs/zksync", rev = "b838853" }
-# zksync_eth_signer = { git = "https://github.com/matter-labs/zksync", rev = "b838853" }
+# zksync = { path = "../zksync/sdk/zksync-rs" }
+# zksync_eth_signer = { path = "../zksync/core/lib/eth_signer" }
+zksync = { git = "https://github.com/wakabat/zksync", rev = "33b56a3" }
+zksync_eth_signer = { git = "https://github.com/wakabat/zksync", rev = "33b56a3" }
 
 [dev-dependencies]
 assert_float_eq = "1.1.3"

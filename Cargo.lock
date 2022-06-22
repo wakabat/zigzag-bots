@@ -3410,6 +3410,7 @@ checksum = "757cfbfe0d17ee6f22fe97e536d463047d451b47cf9d11e2b7d1398b0ef274dd"
 [[package]]
 name = "vlog"
 version = "1.0.0"
+source = "git+https://github.com/wakabat/zksync?rev=33b56a3#33b56a3c92f9d4c7b929be559c6a1ce2a105b2b5"
 dependencies = [
  "sentry",
  "tracing",
@@ -3690,6 +3691,7 @@ dependencies = [
 [[package]]
 name = "zksync"
 version = "0.3.0"
+source = "git+https://github.com/wakabat/zksync?rev=33b56a3#33b56a3c92f9d4c7b929be559c6a1ce2a105b2b5"
 dependencies = [
  "async-trait",
  "ethabi",
@@ -3713,6 +3715,7 @@ dependencies = [
 [[package]]
 name = "zksync_basic_types"
 version = "1.0.0"
+source = "git+https://github.com/wakabat/zksync?rev=33b56a3#33b56a3c92f9d4c7b929be559c6a1ce2a105b2b5"
 dependencies = [
  "serde",
  "web3",
@@ -3721,6 +3724,7 @@ dependencies = [
 [[package]]
 name = "zksync_config"
 version = "1.0.0"
+source = "git+https://github.com/wakabat/zksync?rev=33b56a3#33b56a3c92f9d4c7b929be559c6a1ce2a105b2b5"
 dependencies = [
  "envy",
  "num",
@@ -3734,6 +3738,7 @@ dependencies = [
 [[package]]
 name = "zksync_contracts"
 version = "1.0.0"
+source = "git+https://github.com/wakabat/zksync?rev=33b56a3#33b56a3c92f9d4c7b929be559c6a1ce2a105b2b5"
 dependencies = [
  "ethabi",
  "serde_json",
@@ -3742,6 +3747,7 @@ dependencies = [
 [[package]]
 name = "zksync_crypto"
 version = "1.0.0"
+source = "git+https://github.com/wakabat/zksync?rev=33b56a3#33b56a3c92f9d4c7b929be559c6a1ce2a105b2b5"
 dependencies = [
  "base64",
  "bincode",
@@ -3763,6 +3769,7 @@ dependencies = [
 [[package]]
 name = "zksync_eth_client"
 version = "1.0.0"
+source = "git+https://github.com/wakabat/zksync?rev=33b56a3#33b56a3c92f9d4c7b929be559c6a1ce2a105b2b5"
 dependencies = [
  "anyhow",
  "ethabi",
@@ -3781,6 +3788,7 @@ dependencies = [
 [[package]]
 name = "zksync_eth_signer"
 version = "1.0.0"
+source = "git+https://github.com/wakabat/zksync?rev=33b56a3#33b56a3c92f9d4c7b929be559c6a1ce2a105b2b5"
 dependencies = [
  "async-trait",
  "hex",
@@ -3798,6 +3806,7 @@ dependencies = [
 [[package]]
 name = "zksync_types"
 version = "1.0.0"
+source = "git+https://github.com/wakabat/zksync?rev=33b56a3#33b56a3c92f9d4c7b929be559c6a1ce2a105b2b5"
 dependencies = [
  "bigdecimal",
  "chrono",
@@ -3821,6 +3830,7 @@ dependencies = [
 [[package]]
 name = "zksync_utils"
 version = "1.0.0"
+source = "git+https://github.com/wakabat/zksync?rev=33b56a3#33b56a3c92f9d4c7b929be559c6a1ce2a105b2b5"
 dependencies = [
  "anyhow",
  "bigdecimal",

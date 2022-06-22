@@ -172,11 +172,11 @@ pub struct Fill {
     base_quantity: Amount,
     fill_status: OrderStatus,
     tx_hash: H256,
-    taker_user_id: H256,
-    maker_user_id: H256,
+    taker_user_id: UserId,
+    maker_user_id: UserId,
     fee_amount: Fee,
     fee_token: Token,
-    timestamp: Timestamp,
+    timestamp: Date,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
@@ -260,7 +260,7 @@ pub struct LastpriceArgs {
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct MarketsummaryArgs {
-    chain_id: ChainId,
+    // chain_id: ChainId,
     market: Market,
     price: Price,
     high_24: Price,
@@ -326,17 +326,17 @@ pub struct Asset {
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct MarketInfo {
-    base_asset_id: String,
-    quote_asset_id: String,
+    base_asset_id: u32,
+    quote_asset_id: u32,
     base_fee: Price,
     quote_fee: Price,
-    min_size: Amount,
-    max_size: Amount,
+    // min_size: Amount,
+    // max_size: Amount,
     zigzag_chain_id: ChainId,
     price_precision_decimal: u32,
     base_asset: Asset,
     quote_asset: Asset,
-    id: String,
+    // id: String,
     alias: Market,
 }
 

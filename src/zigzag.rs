@@ -38,6 +38,17 @@ impl Price {
     }
 }
 
+impl From<f64> for Price {
+    fn from(v: f64) -> Self {
+        Price::Float(v)
+    }
+}
+impl From<String> for Price {
+    fn from(v: String) -> Self {
+        Price::String(v)
+    }
+}
+
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(test, derive(strum_macros::EnumIter))]
 pub enum OrderStatus {
@@ -214,7 +225,9 @@ pub struct Fill {
     pub maker_user_id: UserId,
     pub fee_amount: Option<Fee>,
     pub fee_token: Option<Token>,
-    pub timestamp: Date,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    pub timestamp: Option<Date>,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
@@ -477,7 +490,7 @@ mod tests {
     fn test_serialize_liquidity() {
         let l = Liquidity {
             side: Side::Buy,
-            price: 3100.0,
+            price: 3100.0.into(),
             base_quantity: 1.2322,
             expires: Some(1642677967),
         };
@@ -485,7 +498,7 @@ mod tests {
         assert_eq!(v, json!(["b", 3100.0, 1.2322, 1642677967,]));
         let l = Liquidity {
             side: Side::Buy,
-            price: 3100.0,
+            price: 3100.0.into(),
             base_quantity: 1.2322,
             expires: None,
         };
@@ -503,7 +516,7 @@ mod tests {
                 side: Side::Sell,
                 // Ideally we shouldn't test for float's equalness this way,
                 // but allow me to be lazy for a bit.
-                price: 3300.0,
+                price: 3300.0.into(),
                 base_quantity: 0.2822,
                 expires: Some(1642677969),
             }
@@ -514,7 +527,7 @@ mod tests {
             l2,
             Liquidity {
                 side: Side::Sell,
-                price: 3300.0,
+                price: 3300.0.into(),
                 base_quantity: 0.2822,
                 expires: None,
             }
@@ -546,7 +559,7 @@ mod tests {
         let op: Operation = from_str(s).expect("from_str");
         if let Operation::Orderreceipt(order) = op {
             assert_eq!("23", order.user_id);
-            assert_f64_near!(order.price, 3370.93);
+            assert_f64_near!(order.price.float_value(), 3370.93);
             assert!(!order.tx_hash.unwrap().is_zero());
         } else {
             panic!("Invalid op type: {:?}", op);

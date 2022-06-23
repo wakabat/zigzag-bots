@@ -87,96 +87,96 @@ pub enum Operation {
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct LoginArgs {
-    chain_id: ChainId,
-    user_id: UserId,
+    pub chain_id: ChainId,
+    pub user_id: UserId,
 }
 
 // TODO: Order from zksync_types do not derive PartialEq trait, maybe we should
 // define a new zksync order type?
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug)]
 pub struct Submitorder3Args {
-    chain_id: ChainId,
-    market: Market,
-    zk_order: ZksyncOrder,
+    pub chain_id: ChainId,
+    pub market: Market,
+    pub zk_order: ZksyncOrder,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct Indicateliq2Args {
-    chain_id: ChainId,
-    market: Market,
-    liquidity: Vec<Liquidity>,
+    pub chain_id: ChainId,
+    pub market: Market,
+    pub liquidity: Vec<Liquidity>,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct Liquidity {
-    side: Side,
-    price: Price,
-    base_quantity: Amount,
+    pub side: Side,
+    pub price: Price,
+    pub base_quantity: Amount,
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(default)]
-    expires: Option<Timestamp>,
+    pub expires: Option<Timestamp>,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug)]
 pub struct FillrequestArgs {
-    chain_id: ChainId,
-    order_id: OrderId,
-    fill_order: ZksyncOrder,
+    pub chain_id: ChainId,
+    pub order_id: OrderId,
+    pub fill_order: ZksyncOrder,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug)]
 pub struct UserordermatchArgs {
-    chain_id: ChainId,
+    pub chain_id: ChainId,
     // TODO: verify if those should be plain order, or zksync order
-    taker_order: ZksyncOrder,
-    maker_order: ZksyncOrder,
+    pub taker_order: ZksyncOrder,
+    pub maker_order: ZksyncOrder,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct OrderreceiptreqArgs {
-    chain_id: ChainId,
-    order_id: OrderId,
+    pub chain_id: ChainId,
+    pub order_id: OrderId,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct Order {
-    chain_id: ChainId,
-    id: OrderId,
-    market: Market,
-    side: Side,
-    price: Price,
-    base_quantity: Amount,
-    quote_quantity: Amount,
-    expires: Timestamp,
-    user_id: UserId,
-    order_status: OrderStatus,
-    remaining: Amount,
+    pub chain_id: ChainId,
+    pub id: OrderId,
+    pub market: Market,
+    pub side: Side,
+    pub price: Price,
+    pub base_quantity: Amount,
+    pub quote_quantity: Amount,
+    pub expires: Timestamp,
+    pub user_id: UserId,
+    pub order_status: OrderStatus,
+    pub remaining: Amount,
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(default)]
-    tx_hash: Option<H256>,
+    pub tx_hash: Option<H256>,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct FillreceiptreqArgs {
-    chain_id: ChainId,
-    order_id: OrderId,
+    pub chain_id: ChainId,
+    pub order_id: OrderId,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct Fill {
-    chain_id: ChainId,
-    id: FillId,
-    market: Market,
-    side: Side,
-    price: Price,
-    base_quantity: Amount,
-    fill_status: OrderStatus,
-    tx_hash: H256,
-    taker_user_id: UserId,
-    maker_user_id: UserId,
-    fee_amount: Fee,
-    fee_token: Token,
-    timestamp: Date,
+    pub chain_id: ChainId,
+    pub id: FillId,
+    pub market: Market,
+    pub side: Side,
+    pub price: Price,
+    pub base_quantity: Amount,
+    pub fill_status: OrderStatus,
+    pub tx_hash: H256,
+    pub taker_user_id: UserId,
+    pub maker_user_id: UserId,
+    pub fee_amount: Fee,
+    pub fee_token: Token,
+    pub timestamp: Date,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
@@ -190,195 +190,195 @@ pub enum RemainingOrError {
 // deal with this type later.
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct OrderUpdate {
-    chain_id: ChainId,
-    order_id: OrderId,
-    status: OrderStatus,
+    pub chain_id: ChainId,
+    pub order_id: OrderId,
+    pub status: OrderStatus,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct OrdersArgs {
-    orders: Vec<Order>,
+    pub orders: Vec<Order>,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct FillsArgs {
-    fills: Vec<Fill>,
+    pub fills: Vec<Fill>,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct OrderstatusArgs {
-    updates: Vec<OrderUpdate>,
+    pub updates: Vec<OrderUpdate>,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct FillStatus {
-    chain_id: ChainId,
-    full_id: FillId,
-    status: OrderStatus,
-    tx_hash: H256,
-    remaining: Amount,
-    fee_amount: Fee,
-    fee_token: Token,
-    timestamp: Timestamp,
+    pub chain_id: ChainId,
+    pub full_id: FillId,
+    pub status: OrderStatus,
+    pub tx_hash: H256,
+    pub remaining: Amount,
+    pub fee_amount: Fee,
+    pub fee_token: Token,
+    pub timestamp: Timestamp,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct FillstatusArgs {
-    statuses: Vec<FillStatus>,
+    pub statuses: Vec<FillStatus>,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct Liquidity2Args {
-    chain_id: ChainId,
-    market: Market,
-    liquidity: Vec<Liquidity>,
+    pub chain_id: ChainId,
+    pub market: Market,
+    pub liquidity: Vec<Liquidity>,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct RefreshliquidityArgs {
-    chain_id: ChainId,
-    market: Market,
+    pub chain_id: ChainId,
+    pub market: Market,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct PriceUpdate {
-    market: Market,
-    price: Price,
-    price_change: Price,
+    pub market: Market,
+    pub price: Price,
+    pub price_change: Price,
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(default)]
-    quote_volume: Option<Amount>,
+    pub quote_volume: Option<Amount>,
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(default)]
-    base_volume: Option<Amount>,
+    pub base_volume: Option<Amount>,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct LastpriceArgs {
-    updates: Vec<PriceUpdate>,
+    pub updates: Vec<PriceUpdate>,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct MarketsummaryArgs {
-    // chain_id: ChainId,
-    market: Market,
-    price: Price,
-    high_24: Price,
-    low_24: Price,
-    price_change: Price,
-    base_volume: Amount,
-    quote_volume: Amount,
+    // pub chain_id: ChainId,
+    pub market: Market,
+    pub price: Price,
+    pub high_24: Price,
+    pub low_24: Price,
+    pub price_change: Price,
+    pub base_volume: Amount,
+    pub quote_volume: Amount,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct SubscribemarketArgs {
-    chain_id: ChainId,
-    market: Market,
+    pub chain_id: ChainId,
+    pub market: Market,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct UnsubscribemarketArgs {
-    chain_id: ChainId,
-    market: Market,
+    pub chain_id: ChainId,
+    pub market: Market,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct CancelorderArgs {
-    chain_id: ChainId,
-    order_id: OrderId,
+    pub chain_id: ChainId,
+    pub order_id: OrderId,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct CancelallArgs {
-    chain_id: ChainId,
-    user_id: UserId,
+    pub chain_id: ChainId,
+    pub user_id: UserId,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct RequestquoteArgs {
-    chain_id: ChainId,
-    market: Market,
-    side: Side,
-    base_quantity: Amount,
-    quote_quantity: Amount,
+    pub chain_id: ChainId,
+    pub market: Market,
+    pub side: Side,
+    pub base_quantity: Amount,
+    pub quote_quantity: Amount,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct QuoteArgs {
-    chain_id: ChainId,
-    market: Market,
-    side: Side,
-    base_quantity: Amount,
-    price: Price,
-    quote_quantity: Amount,
+    pub chain_id: ChainId,
+    pub market: Market,
+    pub side: Side,
+    pub base_quantity: Amount,
+    pub price: Price,
+    pub quote_quantity: Amount,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Asset {
-    id: u32,
-    address: String,
-    symbol: String,
-    decimals: u32,
-    enabled_for_fees: bool,
+    pub id: u32,
+    pub address: String,
+    pub symbol: String,
+    pub decimals: u32,
+    pub enabled_for_fees: bool,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct MarketInfo {
-    base_asset_id: u32,
-    quote_asset_id: u32,
-    base_fee: Price,
-    quote_fee: Price,
-    // min_size: Amount,
-    // max_size: Amount,
-    zigzag_chain_id: ChainId,
-    price_precision_decimal: u32,
-    base_asset: Asset,
-    quote_asset: Asset,
-    // id: String,
-    alias: Market,
+    pub base_asset_id: u32,
+    pub quote_asset_id: u32,
+    pub base_fee: Price,
+    pub quote_fee: Price,
+    // pub min_size: Amount,
+    // pub max_size: Amount,
+    pub zigzag_chain_id: ChainId,
+    pub price_precision_decimal: u32,
+    pub base_asset: Asset,
+    pub quote_asset: Asset,
+    // pub id: String,
+    pub alias: Market,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct MarketinfoArgs {
-    market_info: MarketInfo,
+    pub market_info: MarketInfo,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct Marketinfo2Args {
-    market_infos: Vec<MarketInfo>,
+    pub market_infos: Vec<MarketInfo>,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct MarketreqArgs {
-    chain_id: ChainId,
-    detailed: bool,
+    pub chain_id: ChainId,
+    pub detailed: bool,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct DailyvolumereqArgs {
-    chain_req: u32,
+    pub chain_req: u32,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct Volume {
-    chain_id: ChainId,
-    market: Market,
-    date: Date,
-    base_volume: Amount,
-    quote_volume: Amount,
+    pub chain_id: ChainId,
+    pub market: Market,
+    pub date: Date,
+    pub base_volume: Amount,
+    pub quote_volume: Amount,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct DailyvolumeArgs {
-    volumes: Vec<Volume>,
+    pub volumes: Vec<Volume>,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
 pub struct ErrorArgs {
-    operation: String,
-    error: String,
+    pub operation: String,
+    pub error: String,
 }
 
 #[cfg(test)]

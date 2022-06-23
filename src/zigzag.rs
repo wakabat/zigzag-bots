@@ -6,6 +6,7 @@
 /// at a later time.
 use serde::{Deserialize, Serialize};
 use serde_tuple::{Deserialize_tuple, Serialize_tuple};
+use std::str::FromStr;
 pub use zksync::zksync_types::{Order as ZksyncOrder, H256};
 
 pub type ChainId = u32;
@@ -13,12 +14,29 @@ pub type FillId = u32;
 pub type OrderId = u32;
 pub type UserId = String;
 pub type Market = String;
-pub type Price = f64;
 pub type Amount = f64;
 pub type Fee = f64;
 pub type Timestamp = u64;
 pub type Date = String;
 pub type Token = String;
+
+// Some APIs, such as fills, might return prices in floats in case of general
+// fills, but prices in strings in case of user fills
+#[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
+#[serde(untagged)]
+pub enum Price {
+    Float(f64),
+    String(String),
+}
+
+impl Price {
+    pub fn float_value(&self) -> f64 {
+        match self {
+            Price::Float(v) => *v,
+            Price::String(s) => f64::from_str(s).unwrap_or(0.0),
+        }
+    }
+}
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq, Eq)]
 #[cfg_attr(test, derive(strum_macros::EnumIter))]
@@ -73,7 +91,7 @@ pub enum Operation {
     Marketsummary(MarketsummaryArgs),
     Subscribemarket(SubscribemarketArgs),
     Unsubscribemarket(UnsubscribemarketArgs),
-    Userorderack(Order),
+    Userorderack(UserorderackArgs),
     Cancelall(CancelallArgs),
     Requestquote(RequestquoteArgs),
     Quote(QuoteArgs),
@@ -150,10 +168,30 @@ pub struct Order {
     pub expires: Timestamp,
     pub user_id: UserId,
     pub order_status: OrderStatus,
-    pub remaining: Amount,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    pub remaining: Option<Amount>,
     #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(default)]
     pub tx_hash: Option<H256>,
+}
+
+#[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
+pub struct UserorderackArgs {
+    pub chain_id: ChainId,
+    pub id: OrderId,
+    pub market: Market,
+    pub side: Side,
+    pub price: Price,
+    pub base_quantity: Amount,
+    pub quote_quantity: Amount,
+    pub expires: Timestamp,
+    pub user_id: UserId,
+    pub order_status: OrderStatus,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    #[serde(default)]
+    pub tx_hash: Option<H256>,
+    pub remaining: Amount,
 }
 
 #[derive(Serialize_tuple, Deserialize_tuple, Clone, Debug, PartialEq)]
@@ -171,11 +209,11 @@ pub struct Fill {
     pub price: Price,
     pub base_quantity: Amount,
     pub fill_status: OrderStatus,
-    pub tx_hash: H256,
+    pub tx_hash: Option<H256>,
     pub taker_user_id: UserId,
     pub maker_user_id: UserId,
-    pub fee_amount: Fee,
-    pub fee_token: Token,
+    pub fee_amount: Option<Fee>,
+    pub fee_token: Option<Token>,
     pub timestamp: Date,
 }
 

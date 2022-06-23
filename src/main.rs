@@ -4,8 +4,11 @@ extern crate assert_float_eq;
 
 mod zigzag;
 
+use crate::zigzag::{LoginArgs, Operation};
+use async_tungstenite::tokio::connect_async;
 use clap::{ArgEnum, Parser};
 use flexi_logger::Logger;
+use futures::prelude::*;
 use std::fs;
 use zksync::{provider::RpcProvider, zksync_types::H256, Network, Wallet, WalletCredentials};
 use zksync_eth_signer::{EthereumSigner, PrivateKeySigner};
@@ -101,6 +104,20 @@ async fn main() -> anyhow::Result<()> {
             );
         }
     }
+
+    let (zigzag_url, zigzag_chainid) = match args.network {
+        ArgNetwork::Rinkeby => ("wss://secret-thicket-93345.herokuapp.com", 1000),
+        ArgNetwork::Mainnet => ("wss://zigzag-exchange.herokuapp.com", 1),
+    };
+
+    let (mut ws_stream, _) = connect_async(zigzag_url).await?;
+    log::info!("Connected to zigzag!");
+
+    let login = serde_json::to_string(&Operation::Login(LoginArgs {
+        chain_id: zigzag_chainid,
+        user_id: wallet.account_id().unwrap().to_string(),
+    }))?;
+    ws_stream.send(login.into()).await?;
 
     // Below is the playground now
 
